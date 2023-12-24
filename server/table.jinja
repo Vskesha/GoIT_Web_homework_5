@@ -1,0 +1,53 @@
+<style>
+table {
+  font-size: 15px;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+<h2>Exchange rate of {{ days }} last days</h2>
+<br>
+<table>
+  <tr>
+    <th rowspan="2">Date</th>
+    {% for currency in headers -%}
+    <th colspan="3">{{ currency }}</th>
+    {% endfor %}
+<!--    <th colspan="3">USD</th>-->
+<!--    <th colspan="3">EUR</th>-->
+  </tr>
+  <tr>
+    {% for currency in headers -%}
+    {% for sub in subheads -%}
+    <th>{{ sub }}</th>
+    {% endfor %}
+    {% endfor %}
+<!--    <th>buy</th>-->
+<!--    <th>sell</th>-->
+<!--    <th>NBU</th>-->
+  </tr>
+  {% for row in data -%}
+  <tr>
+    {% for date, currencies in row.items() %}
+    <td>{{ date }}</td>
+    {% for currency in headers -%}
+    {% for sub in subheads -%}
+    <td>{{ currencies[currency][sub] }}</td>
+    {% endfor %}
+    {% endfor %}
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+<br>
